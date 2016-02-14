@@ -9,22 +9,31 @@ var {
 
 
 var Weather = React.createClass({
+  getInitialState: function() {
+    return {
+        pin: {
+          latitude: 0,
+          longitude: 0
+        }
+    };
+  },
+
+
   render: function() {
-
-    var pins = [{
-      latitude: -37,
-      longitude: 144
-    }];
-
     return <MapView
-              annotations={pins}
+              annotations={[this.state.pin]}
               onRegionChangeComplete={this.onRegionChangeComplete}
               style={styles.map}>
            </MapView>;
   },
 
   onRegionChangeComplete: function(region) {
-
+    this.setState({
+      pin:{
+        latitude: region.latitude,
+        longitude: region.longitude
+      }
+    });
   }
 });
 
@@ -32,7 +41,6 @@ var styles = StyleSheet.create({
   map: {
     flex: 1
   }
-
 });
 
 
